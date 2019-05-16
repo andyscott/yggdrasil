@@ -1,0 +1,3 @@
+[submodule "vendor/rules_scala"]
+	path = vendor/rules_scala
+	url = https://github.com/higherkindness/rules_scala

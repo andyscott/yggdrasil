@@ -24,13 +24,9 @@ http_archive(
     strip_prefix = "protobuf-3.6.1.3",
 )
 
-rules_scala_annex_commit = "eeefae00b6e12ffd514f49c399f8d0abff7e4182"
-rules_scala_annex_sha256 = "7d0bfa327d177ae3258483082b5a2c2dff763aca53a20b07b6b2cc5e866ae9fd"
-http_archive(
+local_repository(
     name = "rules_scala_annex",
-    sha256 = rules_scala_annex_sha256,
-    strip_prefix = "rules_scala-{}".format(rules_scala_annex_commit),
-    url = "https://github.com/higherkindness/rules_scala/archive/{}.zip".format(rules_scala_annex_commit),
+    path = "vendor/rules_scala",
 )
 
 http_archive(
