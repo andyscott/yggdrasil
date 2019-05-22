@@ -4,7 +4,9 @@
 *.swp
 *~
 .DS_store
+.\#*
 .bazel_cache
+.neo4j
 /.classpath
 /.factorypath
 /.idea/
@@ -14,6 +16,7 @@
 /.vscode/
 /bazel.iml
 /external-tools/
+\#*\#
 bazel-*
 hash1
 hash2

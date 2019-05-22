@@ -50,3 +50,42 @@ git_repository(
     remote = "https://github.com/bazelbuild/bazel-skylib.git",
     tag = "0.6.0",
 )
+
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+
+maven_repositories = [
+    "https://jcenter.bintray.com",
+]
+
+maven_install(
+    artifacts = [
+        "io.circe:circe-core_2.12:0.10.0",
+        "io.circe:circe-yaml_2.12:0.10.0",
+        "io.grpc:grpc-netty:jar:1.20.0",
+        "io.monix:minitest_2.12:jar:2.4.0",
+        "org.neo4j.driver:neo4j-java-driver:jar:1.7.4",
+        "org.neo4j.test:neo4j-harness:jar:3.5.5",
+        "org.neo4j:neo4j:jar:3.5.5",
+        "org.scalaz:scalaz-zio-interop-cats_2.12:jar:0.19",
+        "org.scalaz:scalaz-zio_2.12:jar:0.19",
+        "org.typelevel:cats-core_2.12:jar:1.6.0",
+        "org.typelevel:cats-effect_2.12:jar:1.3.0",
+    ],
+    repositories = maven_repositories,
+)
+
+maven_install(
+    name = "maven_neo4j",
+    artifacts = [
+        "org.neo4j:neo4j:jar:3.5.5",
+    ],
+    repositories = maven_repositories,
+)
+
+"""
+git_repository(
+    name = "io_grpc_grpc_java",
+    remote = "https://github.com/grpc/grpc-java",
+    tag = "v1.20.0",
+)
+"""
