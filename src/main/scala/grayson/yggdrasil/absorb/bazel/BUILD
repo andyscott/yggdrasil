@@ -12,5 +12,6 @@ scala_binary(
 	"@maven//:org_neo4j_neo4j",
 	"@maven//:org_neo4j_neo4j_graphdb_api",
         "@bazel//src/main/protobuf:build_java_proto",
+	"@maven//:io_verizon_quiver_core_2_12",
     ],
 )

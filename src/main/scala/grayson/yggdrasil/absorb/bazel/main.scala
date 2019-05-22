@@ -9,6 +9,8 @@ import java.io.FileInputStream
 import cats.effect.IO
 import cats.effect.Resource
 
+import quiver._
+
 import com.google.devtools.build.lib.query2.proto.proto2api.Build
 
 sealed trait DecodeError
@@ -25,16 +27,38 @@ object Main {
 
     val io = for {
       proto <- protoIO
-      result = proto
+      result0 = proto
                  .getTargetList.asScala.toList
                  .traverse(decodeTarget(_).toValidatedNel)
                  .toEither
-      _     <- result.fold(
+      result1 = result0.map(graphThings)
+      _     <- result1.fold(
                  _.traverse(e => printlnIO(s"Error! $e")),
-                 _.traverse(t => printlnIO(s"> $t")))
+                 t => printlnIO(s"> $t"))
     } yield ()
 
     io.unsafeRunSync()
+  }
+
+  type G = Graph[String, Unit, Unit]
+  val gnil: G = empty
+  def graphThings(targets: List[Target]): G = {
+    targets.foldLeft(gnil) { (g, t) => t match {
+      case rule: Target.Rule =>
+        val g0 = g.addNode(LNode(rule.name, ()))
+        val g1 = rule.inputs.foldLeft(g0) { (gg, input) =>
+          gg
+            .addNode(LNode(input, ()))
+            .addEdge(LEdge(input, rule.name, ()))
+        }
+        val g2 = rule.outputs.foldLeft(g0) { (gg, output) =>
+          gg
+            .addNode(LNode(output, ()))
+            .addEdge(LEdge(rule.name, output, ()))
+        }
+        g2
+      case _ => g
+    }}
   }
 
   def decodeTarget(bt: Build.Target): Either[DecodeError, Target] = bt.getType match {

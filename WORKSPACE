@@ -1,3 +1,4 @@
+
 workspace(name = "yggdrasil")
 
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
@@ -70,6 +71,7 @@ maven_install(
         "org.scalaz:scalaz-zio_2.12:jar:0.19",
         "org.typelevel:cats-core_2.12:jar:1.6.0",
         "org.typelevel:cats-effect_2.12:jar:1.3.0",
+        "io.verizon.quiver:core_2.12:7.0.19",
     ],
     repositories = maven_repositories,
 )
